@@ -1,0 +1,41 @@
+# Node.js / General
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.env
+.DS_Store
+Thumbs.db
+
+# React frontend (ci-build-interface)
+ci-build-interface/node_modules/
+ci-build-interface/dist/
+ci-build-interface/.vite/
+ci-build-interface/coverage/ # If you have test coverage reports
+
+# Node.js backend (build-server-backend)
+build-server-backend/node_modules/
+build-server-backend/uploads/ # Exclude uploaded files
+# If you want to keep the 'uploads' directory but not its contents,
+# you can add a .gitkeep file inside it: build-server-backend/uploads/.gitkeep
+# and then add 'build-server-backend/uploads/*' and '!build-server-backend/uploads/.gitkeep'
+
+# C# / .NET (ConsoleInstaller)
+ConsoleInstaller/bin/
+ConsoleInstaller/obj/
+*.user
+*.suo
+*.cache
+*.nupkg
+*.snk
+*.pdb # Program database files, usually for debugging
+
+# Build outputs from your CI process
+build_output/
+msbuild.binlog
+
+# IDE-specific folders
+.vscode/
+.idea/
