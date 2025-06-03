@@ -432,17 +432,17 @@ namespace Console_Installer
                 Directory.CreateDirectory(targetPath);
 		
 		string expectedResourceName = $"Console_Installer.{BuildInfo.DriverPackZipName}";
-		Console.WriteLine(Cyan().Text($"[DEBUG] RootNamespace from csproj: Console_Installer"));
-		Console.WriteLine(Cyan().Text($"[DEBUG] BuildInfo.DriverPackZipName: '{BuildInfo.DriverPackZipName}'"));
-		Console.WriteLine(Cyan().Text($"[DEBUG] Attempting to load embedded resource with full name: '{expectedResourceName}'"));
-		Console.WriteLine(Cyan().Text($"Attempting to load embedded resource: {expectedResourceName}"));
+		//Console.WriteLine(Cyan().Text($"[DEBUG] RootNamespace from csproj: Console_Installer"));
+		//Console.WriteLine(Cyan().Text($"[DEBUG] BuildInfo.DriverPackZipName: '{BuildInfo.DriverPackZipName}'"));
+		//Console.WriteLine(Cyan().Text($"[DEBUG] Attempting to load embedded resource with full name: '{expectedResourceName}'"));
+		//Console.WriteLine(Cyan().Text($"Attempting to load embedded resource: {expectedResourceName}"));
 
 		Assembly assembly = Assembly.GetExecutingAssembly();
 		string[] allResources = assembly.GetManifestResourceNames();
-		Console.WriteLine(Yellow().Bold().Text("[DEBUG] Available Manifest Resources: "));
-		foreach (string resource in allResources) {
-		  Console.WriteLine(Yellow().Text($"  - {resource}"));
-		}
+		//Console.WriteLine(Yellow().Bold().Text("[DEBUG] Available Manifest Resources: "));
+		//foreach (string resource in allResources) {
+		//  Console.WriteLine(Yellow().Text($"  - {resource}"));
+		//}
 
                 using (Stream stream = assembly.GetManifestResourceStream(expectedResourceName))
                 {
