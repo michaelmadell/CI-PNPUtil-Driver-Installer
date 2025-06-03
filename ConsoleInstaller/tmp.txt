@@ -98,6 +98,7 @@
     <PackageReference Include="Crayon" Version="2.0.69" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CoreStationHX.zip" />
     <Content Include="Untitled1.ico" Condition="Exists('Untitled1.ico')" />
   </ItemGroup>
   <Target Name="GenerateBuildInfoFile" BeforeTargets="CoreCompile">
@@ -131,7 +132,4 @@
       <Compile Include="$(IntermediateOutputPath)GeneratedBuildInfo.cs" />
     </ItemGroup>
   </Target>
-    <ItemGroup>
-      <EmbeddedResource Include="$(DriverPackZipForEmbedding)" Condition="Exists('$(DriverPackZipForEmbedding)')" />
-    </ItemGroup>
 </Project>

@@ -22,9 +22,10 @@ namespace Console_Installer
         [STAThread]
         static void Main(string[] args)
         {
+	    int currentBufferHeight = Console.BufferHeight;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.SetWindowSize(110,34);
-            Console.SetBufferSize(110, 34);
+            Console.SetBufferSize(110, currentBufferHeight);
             DisplayAsciiArt();
             Console.WriteLine(" " + Bold().Green().Underline().Text("Welcome to the Amulet Hotkey Baseline Instaler\r"));
             string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
@@ -188,8 +189,14 @@ namespace Console_Installer
         {
             string paddedMode = mode.PadRight(14);
             string current = ReadRegistryKey("Current_Baseline");
+	    string displayFamilyForTitle = BuildInfo.ProductFamily;
+	    if (BuildInfo.ProductFamily == "Host (CoreStation)")
+	    {
+		displayFamilyForTitle = "CoreStation";
+	    }
 
             Console.WriteLine("\n Help Information:\n" +
+			$" This Installer is for the {displayFamilyForTitle} {BuildInfo.SelectedProduct}" +
                         " Commands:\n" +
                         " ─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─\n" +
                         "   install       --  Installs Drivers to current system\n" +
@@ -209,6 +216,11 @@ namespace Console_Installer
         }
         static void DisplayAsciiArt()
         {
+	    string displayFamilyForTitle = BuildInfo.ProductFamily;
+	    if (BuildInfo.ProductFamily == "Host (CoreStation)")
+	    {
+		displayFamilyForTitle = "CoreStation";
+	    }
             string asciiArt = Environment.NewLine + @"   /$$$$$$                       /$$           /$$" + Environment.NewLine +
 @"  /$$__  $$                     | $$          | $$" + Environment.NewLine +
 @" | $$  \ $$/$$$$$$/$$$$ /$$   /$$ $$ /$$$$$$ /$$$$$$                :----:      :--=--.     .--=--." + Environment.NewLine +
@@ -230,7 +242,7 @@ namespace Console_Installer
             //Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(Bold().Rgb(135,229,235).Text(asciiArt));
             Console.SetCursorPosition(1, Console.CursorTop);
-            Console.WriteLine($"Amulet Hotkey Baseline Installer for {BuildInfo.ProductFamily} {BuildInfo.SelectedProduct}\r");
+            Console.WriteLine($"Amulet Hotkey Baseline Installer for {displayFamilyForTitle} {BuildInfo.SelectedProduct}\r");
             Console.WriteLine(" \x00a9 Amulet Hotkey Ltd 2025\r");
             Console.WriteLine($" {BuildInfo.EffectiveBaseline}\n");
         }
@@ -419,10 +431,20 @@ namespace Console_Installer
             {
                 Directory.CreateDirectory(targetPath);
 		
-		string resourceName = $"Console_Installer.{BuildInfo.DriverPackZipName}";
-		Console.WriteLine(Cyan().Text($"Attempting to load embedded resource: {resourceName}"));
+		string expectedResourceName = $"Console_Installer.{BuildInfo.DriverPackZipName}";
+		Console.WriteLine(Cyan().Text($"[DEBUG] RootNamespace from csproj: Console_Installer"));
+		Console.WriteLine(Cyan().Text($"[DEBUG] BuildInfo.DriverPackZipName: '{BuildInfo.DriverPackZipName}'"));
+		Console.WriteLine(Cyan().Text($"[DEBUG] Attempting to load embedded resource with full name: '{expectedResourceName}'"));
+		Console.WriteLine(Cyan().Text($"Attempting to load embedded resource: {expectedResourceName}"));
 
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"Console_Installer.{resourceName}"))
+		Assembly assembly = Assembly.GetExecutingAssembly();
+		string[] allResources = assembly.GetManifestResourceNames();
+		Console.WriteLine(Yellow().Bold().Text("[DEBUG] Available Manifest Resources: "));
+		foreach (string resource in allResources) {
+		  Console.WriteLine(Yellow().Text($"  - {resource}"));
+		}
+
+                using (Stream stream = assembly.GetManifestResourceStream(expectedResourceName))
                 {
                     if (stream == null)
                     {
