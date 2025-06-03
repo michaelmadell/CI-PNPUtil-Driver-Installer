@@ -196,7 +196,7 @@ namespace Console_Installer
 	    }
 
             Console.WriteLine("\n Help Information:\n" +
-			$" This Installer is for the {displayFamilyForTitle} {BuildInfo.SelectedProduct}" +
+			$" This Installer is for the {displayFamilyForTitle} {BuildInfo.SelectedProduct}\n" +
                         " Commands:\n" +
                         " ─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─═─\n" +
                         "   install       --  Installs Drivers to current system\n" +
